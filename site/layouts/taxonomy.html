@@ -1,0 +1,17 @@
+<!--
+layout: default
+-->
+<div class="list-page">
+{{$tagsSlug := or site.tags_slug "tags"}}
+<h1>All {{titleCase $tagsSlug}}</h1>
+{{if .pagination.Items}}<ul>
+{{range .pagination.Items}}<li><a href="{{relativeURL .URL}}">{{titleCase .Name}} ({{.Count}})</a></li>
+{{end}}</ul>
+<hr class="list-rule">
+<nav class="doc-nav list-nav" aria-label="Tag list pages">
+  {{with .pagination.PrevURL}}<a href="{{relativeURL .}}" rel="prev">Previous</a>{{else}}<span></span>{{end}}
+  <span>{{.pagination.Page}} / {{.pagination.TotalPages}}</span>
+  {{with .pagination.NextURL}}<a href="{{relativeURL .}}" rel="next">Next</a>{{end}}
+</nav>
+{{else}}<p>No {{$tagsSlug}} yet.</p>{{end}}
+</div>

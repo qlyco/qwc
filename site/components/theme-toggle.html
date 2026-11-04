@@ -1,0 +1,49 @@
+<theme-toggle><button type="button" aria-pressed="false">Dark mode</button></theme-toggle>
+<script type="module">
+  const storageKey = "theme"
+  const darkQuery = matchMedia("(prefers-color-scheme: dark)")
+  const root = document.documentElement
+
+  const systemTheme = () => darkQuery.matches ? "dark" : "light"
+  const currentTheme = () => root.dataset.theme || systemTheme()
+
+  function saveTheme(theme) {
+    try {
+      if (theme) {
+        sessionStorage.setItem(storageKey, theme)
+      } else {
+        sessionStorage.removeItem(storageKey)
+      }
+    } catch {
+    }
+  }
+
+  class ThemeToggle extends HTMLElement {
+    connectedCallback() {
+      this.button = this.querySelector("button")
+      this.button.addEventListener("click", () => this.toggle())
+      darkQuery.addEventListener("change", () => this.update())
+      this.update()
+    }
+
+    toggle() {
+      const next = currentTheme() === "dark" ? "light" : "dark"
+
+      if (next === systemTheme()) {
+        delete root.dataset.theme
+        saveTheme(null)
+      } else {
+        root.dataset.theme = next
+        saveTheme(next)
+      }
+
+      this.update()
+    }
+
+    update() {
+      this.button.setAttribute("aria-pressed", String(currentTheme() === "dark"))
+    }
+  }
+
+  customElements.define("theme-toggle", ThemeToggle)
+</script>

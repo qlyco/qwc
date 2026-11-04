@@ -1,0 +1,8 @@
+public
+build
+qwc
+_qwcsite
+*/.qwccache
+*/_qwcbuild
+/*.json
+!/example.*.json

@@ -1,0 +1,51 @@
+<script type="module">
+  const resetDelay = 2000
+
+  class CopyCode extends HTMLElement {
+    connectedCallback() {
+      if (this.button) {
+        return
+      }
+
+      this.button = document.createElement("button")
+      this.button.type = "button"
+      this.button.textContent = "Copy"
+      this.button.addEventListener("click", () => this.copy())
+
+      this.status = document.createElement("span")
+      this.status.className = "visually-hidden"
+      this.status.setAttribute("aria-live", "polite")
+
+      const pre = this.closest("pre")
+      const block = document.createElement("div")
+
+      block.className = "code-block"
+      pre.before(block)
+      block.append(pre, this.button, this.status)
+    }
+
+    async copy() {
+      const code = this.closest("pre").querySelector("code")
+
+      try {
+        await navigator.clipboard.writeText(code.textContent)
+        this.show("Copied")
+      } catch {
+        this.show("Copy failed")
+      }
+    }
+
+    show(label) {
+      this.button.textContent = label
+      this.status.textContent = label
+      clearTimeout(this.timer)
+
+      this.timer = setTimeout(() => {
+        this.button.textContent = "Copy"
+        this.status.textContent = ""
+      }, resetDelay)
+    }
+  }
+
+  customElements.define("copy-code", CopyCode)
+</script>

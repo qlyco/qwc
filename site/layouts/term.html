@@ -1,0 +1,17 @@
+<!--
+layout: default
+-->
+<div class="list-page">
+{{$tagsPath := printf "/%s/" (or site.tags_slug "tags")}}
+<p><a href="{{relativeURL $tagsPath}}">{{titleCase (or site.tags_slug "tags")}}</a></p>
+<h1>{{titleCase .tag}}</h1>
+<ul>
+{{range .pagination.Items}}<li><a href="{{relativeURL .url}}">{{.title}}</a></li>
+{{end}}</ul>
+<hr class="list-rule">
+<nav class="doc-nav list-nav" aria-label="Tag pages">
+  {{with .pagination.PrevURL}}<a href="{{relativeURL .}}" rel="prev">Previous</a>{{else}}<span></span>{{end}}
+  <span>{{.pagination.Page}} / {{.pagination.TotalPages}}</span>
+  {{with .pagination.NextURL}}<a href="{{relativeURL .}}" rel="next">Next</a>{{end}}
+</nav>
+</div>

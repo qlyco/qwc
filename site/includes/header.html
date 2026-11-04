@@ -1,0 +1,9 @@
+<body>
+<header class="site-header">
+  <a class="name" href="{{relativeURL "/"}}">{{site.title}}</a>
+  <nav aria-label="Site">
+    {{range site.nav}}<a href="{{relativeURL .href}}"{{if and $.section (eq .section $.section)}} aria-current="true"{{end}}>{{.label}}</a>
+    {{end}}<a href="{{site.repo}}" target="_blank" rel="noopener">Source</a>
+  </nav>
+  {{template "components/theme-toggle"}}
+</header>

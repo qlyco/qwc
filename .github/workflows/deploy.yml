@@ -1,0 +1,57 @@
+name: Deploy qwc site to GitHub Pages
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: qwc version to build with, such as v0.0.1
+        type: string
+        required: true
+      root:
+        description: Site folder in the calling repository
+        type: string
+        default: public
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout site
+      uses: actions/checkout@v6
+
+    - name: Set up Pages
+      id: pages
+      uses: actions/configure-pages@v6
+
+    - name: Download qwc
+      env:
+        GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ inputs.version }}
+      run: |
+        gh release download "$VERSION" --repo qlyco/qwc --pattern "qwc-$VERSION.zip" --dir "$RUNNER_TEMP"
+        unzip -q "$RUNNER_TEMP/qwc-$VERSION.zip" qwc -d "$RUNNER_TEMP"
+
+    - name: Build site with qwc
+      env:
+        ROOT: ${{ inputs.root }}
+        SITE_URL: ${{ steps.pages.outputs.base_url }}
+      run: |
+        "$RUNNER_TEMP/qwc" -root "$ROOT" -build -output="$RUNNER_TEMP" -url="$SITE_URL"
+
+    - name: Upload site
+      uses: actions/upload-pages-artifact@v5
+      with:
+        path: ${{ runner.temp }}/_qwcsite
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v5

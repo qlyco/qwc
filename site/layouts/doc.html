@@ -1,0 +1,18 @@
+{{template "includes/head" .}}
+{{template "includes/header" .}}
+<main>
+  {{$tagsSlug := or site.tags_slug "tags"}}
+  {{$docsPath := "/docs/"}}
+  <p><a href="{{relativeURL $docsPath}}">Docs</a>{{range .tags}}{{$tagPath := printf "/%s/%s/" $tagsSlug .}} / <a
+      href="{{relativeURL $tagPath}}">{{titleCase .}}</a>{{end}}</p>
+  {{block "content" .}}{{end}}
+  {{$previous := ""}}{{$next := ""}}{{$found := false}}
+  {{range collection "docs/**"}}{{if $found}}{{if not $next}}{{$next = .}}{{end}}{{else if eq .url $.url}}{{$found =
+  true}}{{else}}{{$previous = .}}{{end}}{{end}}
+  <hr>
+  <nav class="doc-nav" aria-label="Docs pages">
+    {{with $previous}}<a href="{{relativeURL .url}}" rel="prev">Previous</a>{{else}}<span></span>{{end}}
+    {{with $next}}<a href="{{relativeURL .url}}" rel="next">Next</a>{{end}}
+  </nav>
+</main>
+{{template "includes/footer" .}}
