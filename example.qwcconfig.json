@@ -1,0 +1,9 @@
+{
+  "root": "public",
+  "port": 8080,
+  "url": "",
+  "output": ".",
+  "cert": "",
+  "key": "",
+  "verbose": false
+}

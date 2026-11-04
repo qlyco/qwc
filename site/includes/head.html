@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#2196f3">
+  <title>{{if .title}}{{.title}} | {{site.title}}{{else}}{{site.title}}: web composer{{end}}</title>
+  <meta name="description" content="{{or .description site.description}}">
+  {{if eq .visibility "hidden"}}<meta name="robots" content="noindex">{{end}}
+  <link rel="icon" href="{{relativeURL "/favicon.ico"}}" sizes="any">
+  <link rel="apple-touch-icon" href="{{relativeURL "/apple-touch-icon.png"}}">
+  <link rel="manifest" href="{{relativeURL "/site.webmanifest"}}">
+  <script>
+    try {
+      localStorage.removeItem("theme")
+
+      const theme = sessionStorage.getItem("theme")
+
+      if (theme) {
+        document.documentElement.dataset.theme = theme
+      }
+    } catch {
+    }
+  </script>
+  {{template "includes/style"}}
+</head>

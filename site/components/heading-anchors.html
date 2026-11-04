@@ -1,0 +1,11 @@
+<script type="module">
+  for (const heading of document.querySelectorAll("main :is(h2, h3)[id]")) {
+    const anchor = document.createElement("a")
+
+    anchor.className = "heading-anchor"
+    anchor.href = `#${heading.id}`
+    anchor.textContent = "#"
+    anchor.setAttribute("aria-label", `Link to this section: ${heading.textContent}`)
+    heading.append(anchor)
+  }
+</script>

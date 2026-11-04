@@ -1,0 +1,9 @@
+[
+  {"href": "/docs/getting-started", "title": "Getting started", "summary": "Install qwc, run it, and learn the site folder."},
+  {"href": "/docs/pages", "title": "Pages and templates", "summary": "Front matter, layouts, components, collections and pagination."},
+  {"href": "/docs/markdown", "title": "Markdown", "summary": "Write pages in Markdown, mixed with HTML and templates."},
+  {"href": "/docs/text-pages", "title": "Text pages", "summary": "Make sitemaps, feeds and other text files from templates."},
+  {"href": "/docs/building", "title": "Building", "summary": "Build a static copy of the site."},
+  {"href": "/docs/github-pages", "title": "GitHub Pages", "summary": "Build and publish a site with a GitHub workflow."},
+  {"href": "/docs/extending-qwc", "title": "Extending qwc", "summary": "Add plugins, make your own qwc command, or run qwc inside your own program."}
+]

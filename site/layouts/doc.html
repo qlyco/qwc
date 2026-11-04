@@ -1,0 +1,14 @@
+{{template "includes/head" .}}
+{{template "includes/header" .}}
+<main>
+<p><a href="{{relativeURL "/docs/"}}">Docs</a></p>
+{{block "content" .}}{{end}}
+{{$previous := ""}}{{$next := ""}}{{$found := false}}
+{{range site.data.docs}}{{if $found}}{{if not $next}}{{$next = .}}{{end}}{{else if eq .href $.url}}{{$found = true}}{{else}}{{$previous = .}}{{end}}{{end}}
+<hr>
+<nav class="doc-nav" aria-label="Docs pages">
+  {{with $previous}}<a href="{{relativeURL .href}}" rel="prev">Previous: {{.title}}</a>{{else}}<span></span>{{end}}
+  {{with $next}}<a href="{{relativeURL .href}}" rel="next">Next: {{.title}}</a>{{end}}
+</nav>
+</main>
+{{template "includes/footer" .}}

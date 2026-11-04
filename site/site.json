@@ -1,0 +1,12 @@
+{
+  "title": "qwc",
+  "description": "qwc is a small web composer for HTML and Markdown sites. One Go binary that serves your pages as a flat file CMS or builds them into a static site.",
+  "repo": "https://github.com/qlyco/qwc",
+  "nav": [
+    {
+      "href": "/docs/",
+      "label": "Docs",
+      "section": "docs"
+    }
+  ]
+}
